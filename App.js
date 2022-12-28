@@ -20,7 +20,6 @@ import CheckoutScreen from "./src/screens/CheckoutScreen";
 
 
 
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
