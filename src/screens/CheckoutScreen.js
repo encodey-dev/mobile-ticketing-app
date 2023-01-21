@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity , Image,  TextInput, Alert} fr
 import styles from '../core/ticketsStyle';
 import {setPurchase} from '../core/setPurchase';
 import {validateCreditCard} from '../core/validateCreditCard';
+import { TextInputMask } from 'react-native-masked-text'
 
 
 const CheckoutScreen = ( {navigation, route} ) => {
@@ -91,24 +92,47 @@ const CheckoutScreen = ( {navigation, route} ) => {
             value={name}
             onChangeText={(text) => setName(text)}
           />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Card Number"
-            value={cardNumber}
-            onChangeText={(text) => setCardNumber(text)}
-          />
+
+           <TextInputMask
+                type={'credit-card'}
+               value={cardNumber}
+               placeholder="Card Number"
+               options={{
+                obfuscated: false
+              }}
+               keyboardType='numeric'
+              style={styles.textInput}
+                onChangeText={(text) => setCardNumber(text)}
+            />
+
+
+
           <View style={localstyles.row}>
-            <TextInput style={[ localstyles.textField, localstyles.textWithMargin]}
-              placeholder="Expiration Date"
+
+           <TextInputMask
+              type={'datetime'}
               value={expiration}
+              placeholder="MM/YY"
+              options={{ format: 'MM/YY' }}
+              keyboardType='numeric'
+              style={localstyles.textField}
               onChangeText={(text) => setExpiration(text)}
             />
-            <TextInput
-              style={localstyles.textField}
-              placeholder="Security Code"
+
+
+          <TextInputMask
+              type='custom'
               value={cvv}
+              placeholder="Security Code"
+              options={{ mask: '9999' }}
+              keyboardType='numeric'
+              style={localstyles.textField}
               onChangeText={(text) => setCvv(text)}
+
             />
+            
+
+
           </View>
 
 
@@ -138,6 +162,7 @@ const localstyles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
+    color: 'black',
   },
   textWithMargin : {
     marginRight: 24

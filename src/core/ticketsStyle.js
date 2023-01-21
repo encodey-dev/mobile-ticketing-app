@@ -71,6 +71,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
+    color: 'black',
   },
   mainViewWhole: {
     flex: 1,
