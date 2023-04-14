@@ -29,10 +29,10 @@ export const getToken = async () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 
+    console.log(config);
+
     var urlencoded = new URLSearchParams();
     urlencoded.append("grant_type", "password");
-    urlencoded.append("Username", config.userName);
-    urlencoded.append("Password", config.password);
     urlencoded.append("ClientId", config.clientId);
     urlencoded.append("ClientKey", config.clientKey);
 
