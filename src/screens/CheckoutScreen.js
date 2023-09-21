@@ -29,6 +29,8 @@ const CheckoutScreen = ( {navigation, route} ) => {
           cardNumber: cardNumber,
           expiration: expiration,
           cvv: cvv,
+          shortdescription : requestSent.shortDescription,
+          unitprice : requestSent.unitPrice
         };
 
         let paymentresponse =await validateCreditCard(requestPayment);

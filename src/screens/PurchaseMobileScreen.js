@@ -4,7 +4,6 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 import {getToken} from '../core/getToken';
 import {config} from '../core/config';
-import {setPurchase} from '../core/setPurchase';
 import styles from '../core/ticketsStyle';
 
 

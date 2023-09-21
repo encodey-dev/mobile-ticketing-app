@@ -1,6 +1,7 @@
 import {getToken} from './getToken';
 import {config} from './config';
 import {Alert} from 'react-native';
+import {sendPayment} from './sendPayment';
 
 export const validateCreditCard = async (requestBody) => {
     try {
@@ -17,8 +18,11 @@ export const validateCreditCard = async (requestBody) => {
 
         // Futher credit card validation
         // Call payment gateway API
+        
 
-         return true;
+        let paymentresponse =await sendPayment(requestBody);
+
+        return paymentresponse;
 
       } catch (error) {
         console.log(error);
