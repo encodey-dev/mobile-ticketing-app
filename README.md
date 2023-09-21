@@ -5,5 +5,7 @@ We will provide a free mobile application with the source code ready to customiz
 
 The application is ready to buy mobile passes and recharge mifare cards.
 
+System is ready to accept Authorized.net as a payment gateway.  
+
 INSTRUCTIONS
 Copy env file to .env and change variables with your values.
