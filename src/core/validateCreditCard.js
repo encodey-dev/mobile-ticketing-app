@@ -1,7 +1,7 @@
 import {getToken} from './getToken';
 import {config} from './config';
 import {Alert} from 'react-native';
-import {sendPayment} from './sendPayment';
+import {sendPayment} from './authorizeNet';
 
 export const validateCreditCard = async (requestBody) => {
     try {
