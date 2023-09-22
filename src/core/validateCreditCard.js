@@ -22,6 +22,11 @@ export const validateCreditCard = async (requestBody) => {
 
         let paymentresponse =await sendPayment(requestBody);
 
+        if (paymentresponse == false)
+        {
+          Alert.alert("Purchase failed");  
+        }
+
         return paymentresponse;
 
       } catch (error) {

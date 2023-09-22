@@ -1,5 +1,4 @@
 import {config} from './config';
-import {Alert} from 'react-native';
 
 export function generateUUID(digits) {
     let str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXZ';
@@ -80,10 +79,21 @@ export const sendPayment = async (requestBody) => {
         
         if (response.status == 200)
         {
-          const json = await response.text();
+          let json = await response.text();
+          // Remove the first character of the value, for some reason come with a weird character.
+          json = json.substring(1, json.length);
           console.log(json);
 
-          return true;
+          const obj = JSON.parse(json);
+          
+          if (obj.messages.resultCode == 'Ok')
+          {
+            return true;
+          }
+
+
+
+          return false;
         }
         else
         {
