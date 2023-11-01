@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./src/screens/HomeScreen";
+import SignUpScreen from "./src/screens/SignUpScreen";
 
 
 import PurchaseMobileScreen from "./src/screens/PurchaseMobileScreen";
@@ -38,6 +39,14 @@ export default function App() {
           component={HomeScreen}
           options={{
             title: "Encodey App"
+          }}
+        />
+
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
+          options={{
+            title: "Sign Up"
           }}
         />
     

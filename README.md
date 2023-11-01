@@ -9,3 +9,11 @@ System is ready to accept Authorized.net as a payment gateway.
 
 INSTRUCTIONS
 Copy env file to .env and change variables with your values.
+
+AUTHENTICATION.
+System is already setup to use basic authentication using FIREBASE. 
+Source code will not have GoogleService-info.plist neither google-services.json. 
+
+Follow this link if you want to continue using firebase as a authentication.
+
+https://www.freecodecamp.org/news/how-to-add-authentication-to-react-native-in-three-steps-using-firebase/

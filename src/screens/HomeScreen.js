@@ -2,9 +2,12 @@ import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity , Image,  TextInput, Alert} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
+import auth, { firebase } from "@react-native-firebase/auth"
+
 const HomeScreen = ( {navigation} ) => {
 
   const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [userLogin, setuserLogin] = useState(null);
 
   const staticImageLogo = require("../assets/logo.png");
@@ -19,9 +22,16 @@ const HomeScreen = ( {navigation} ) => {
     }, []);
 
     const getLogin = async () => {
-      const loginUser = await EncryptedStorage.getItem(USER_KEY);
-      if (!(loginUser == null)) {
-        setuserLogin(loginUser);
+
+      let user = firebase.auth().currentUser;
+      if (user) {
+        console.log(user);
+
+        let userEmail = firebase.auth().currentUser.email ;
+        setuserLogin(userEmail);
+
+      } else {
+        setuserLogin(null);
       }
 
     }
@@ -31,8 +41,18 @@ const HomeScreen = ( {navigation} ) => {
       await EncryptedStorage.setItem(MIFARE_KEY, null);
       await EncryptedStorage.setItem(RIDERCLASS_KEY,null);
 
+      try {
+        let response = await auth().signOut()
+        if (response && response.user) {
+          Alert.alert("Success ✅", "Authenticated successfully")
+        }
+      } catch (e) {
+        console.error(e.message)
+      }
+
       setuserLogin(null);
       setEmail(null);
+      setPassword(null);
     }
 
     loginAction= async () => {  
@@ -42,8 +62,24 @@ const HomeScreen = ( {navigation} ) => {
         return ;
       }
 
-      await EncryptedStorage.setItem(USER_KEY, email);
-      setuserLogin(email);
+      if (!password || password.length <= 0) 
+      {
+        Alert.alert("Please enter a password");  
+        return ;
+      }
+
+
+      try {
+        let response = await auth().signInWithEmailAndPassword(email, password)
+        if (response && response.user) {
+          await EncryptedStorage.setItem(USER_KEY, email);
+          setuserLogin(email);
+        }
+      } catch (e) {
+        console.log(e.message);
+        Alert.alert("Error ✅", "Unable to authenticated");
+      }
+   
 
     }
     
@@ -92,12 +128,29 @@ const HomeScreen = ( {navigation} ) => {
                 onChangeText={(email) => setEmail(email)}
               />
 
+              <TextInput
+                style={styles.textInput}
+                placeholder="Password"
+                placeholderTextColor="#003f5c"
+                secureTextEntry
+                onChangeText={(password) => setPassword(password)}
+              />
+
               <TouchableOpacity
                                 style={styles.touchableView}
                                 onPress={this.loginAction.bind(this)}
                                   >
                            <Text style={styles.touchableText}>Login</Text>
               </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("SignUpScreen")}}>
+                  <View>
+                    <Text  style={styles.touchableLink}>New? Create account</Text>
+                  </View>
+              </TouchableOpacity>
+
 
           </View>
         )}
@@ -149,6 +202,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
+  },
+  touchableLink: {
+    textAlign: 'center',
+    paddingTop: 5,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+    color: 'blue'
   },
 });
 
