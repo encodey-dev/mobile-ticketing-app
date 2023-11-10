@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity , Image,  TextInput, Alert} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {postCustomer} from '../core/customer';
+import { getUniqueId } from 'react-native-device-info';
 
 import auth, { firebase } from "@react-native-firebase/auth"
 
@@ -24,7 +26,9 @@ const HomeScreen = ( {navigation} ) => {
     const getLogin = async () => {
 
       let user = firebase.auth().currentUser;
-      if (user) {
+      const loginUser = await EncryptedStorage.getItem(USER_KEY);
+
+      if (user && !(loginUser == null)) {
         console.log(user);
 
         let userEmail = firebase.auth().currentUser.email ;
@@ -56,6 +60,9 @@ const HomeScreen = ( {navigation} ) => {
     }
 
     loginAction= async () => {  
+
+
+
       if (!email || email.length <= 0) 
       {
         Alert.alert("Please enter an email");  
@@ -72,8 +79,24 @@ const HomeScreen = ( {navigation} ) => {
       try {
         let response = await auth().signInWithEmailAndPassword(email, password)
         if (response && response.user) {
-          await EncryptedStorage.setItem(USER_KEY, email);
-          setuserLogin(email);
+
+          console.log(response.user);
+
+          let uniqueId = (await getUniqueId()).toString();
+          var requestCustomer = JSON.stringify({
+            "userId": response.user.uid,
+            "userName": response.user.email,
+            "walletId"  : uniqueId
+          });
+
+          let returnCustomer = await postCustomer(requestCustomer);
+          console.log(returnCustomer);
+
+          if (returnCustomer.found)
+          {
+            await EncryptedStorage.setItem(USER_KEY, returnCustomer.id);
+            setuserLogin(email);
+          }
         }
       } catch (e) {
         console.log(e.message);
