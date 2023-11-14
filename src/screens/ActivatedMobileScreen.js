@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  View, Text, StyleSheet, FlatList, SafeAreaView ,TouchableOpacity,ImageBackground, Image} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { getUniqueId } from 'react-native-device-info';
+
 
 import {getToken} from '../core/getToken';
 import styles from '../core/ticketsStyle';
@@ -11,6 +11,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
     const [tickets, setTickets] = useState(null);
     
     const USER_KEY = 'USER_KEY';
+    const WALLET_ID = 'WALLET_ID';
     const staticImage = require("../assets/Ticket.png");
     const staticImageLogo = require("../assets/logo.png");
     
@@ -23,7 +24,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
   const getTickets = async () => {
 
     const loginUser = await EncryptedStorage.getItem(USER_KEY);
-    let uniqueId = (await getUniqueId()).toString();
+    const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
 
     let token = await getToken();
 
@@ -34,7 +35,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
 
         var raw = JSON.stringify({
           "CustomerID": loginUser,
-          "WalletId" : uniqueId
+          "WalletId" : loginWalletId
         });
 
 

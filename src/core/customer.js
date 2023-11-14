@@ -91,6 +91,7 @@ export const getCustomer = async (customerId) => {
 
          returnCustomer.id = json.id;
          returnCustomer.walletId = json.walletId;
+         returnCustomer.found = true;
 
          return returnCustomer;
        }

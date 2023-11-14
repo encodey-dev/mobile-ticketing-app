@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  View, Text,  FlatList, Alert,SafeAreaView ,TouchableOpacity,ImageBackground, Image} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { getUniqueId } from 'react-native-device-info';
+
 
 import {getToken} from '../core/getToken';
 import styles from '../core/ticketsStyle';
@@ -9,8 +9,10 @@ import {config} from '../core/config';
 
 const AvailableMobileScreen = ( {navigation, route} ) => {
     const [tickets, setTickets] = useState(null);
+    const [currentWalletId, setcurrentWalletId] = useState(null);
     
     const USER_KEY = 'USER_KEY';
+    const WALLET_ID = 'WALLET_ID';
 
     const staticImage = require("../assets/Ticket.png");
     const staticImageLogo = require("../assets/logo.png");
@@ -32,10 +34,14 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
   const getTickets = async () => {
 
     const loginUser = await EncryptedStorage.getItem(USER_KEY);
-    let uniqueId = (await getUniqueId()).toString();
+    const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
+
+
+
     console.log(loginUser);
 
     let token = await getToken();
+    setcurrentWalletId(loginWalletId);
 
     try {
         var myHeaders = new Headers();
@@ -44,7 +50,7 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
 
         var raw = JSON.stringify({
           "CustomerID": loginUser,
-          "WalletId" : uniqueId
+          "WalletId" : loginWalletId
         });
 
 
@@ -58,7 +64,7 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
           config.apiUrl+'/tickets/available',  requestOptions
         );
         const json = await response.json();
-
+         console.log(json);
 
         setTickets(json.tickets);
       } catch (error) {
@@ -86,6 +92,7 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
     try {
 
       const loginUser = await EncryptedStorage.getItem(USER_KEY);
+      const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
 
       let token = await getToken();
       var myHeaders = new Headers();
@@ -94,7 +101,8 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
 
       var raw = JSON.stringify({
         "TicketID": item.ticketId,
-        "CustomerID": loginUser
+        "CustomerID": loginUser,
+        "WalletId" : loginWalletId
       });
 
 
@@ -173,6 +181,12 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
                     <Text style={styles.touchableText}>Purchase</Text>
                   </View>
         </TouchableOpacity>
+        { currentWalletId && (
+            <View style={styles.mainView}>
+              <Text>Current Wallet Id</Text>
+              <Text>{currentWalletId}</Text>
+            </View>
+        )}
 
       </View>
      

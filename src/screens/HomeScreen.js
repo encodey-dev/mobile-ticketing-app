@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity , Image,  TextInput, Alert} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {postCustomer} from '../core/customer';
-import { getUniqueId } from 'react-native-device-info';
+import {postCustomer, getCustomer} from '../core/customer';
+import { getUniqueId , getDeviceName} from 'react-native-device-info';
 
 import auth, { firebase } from "@react-native-firebase/auth"
 
@@ -17,6 +17,7 @@ const HomeScreen = ( {navigation} ) => {
   const USER_KEY = 'USER_KEY';
   const MIFARE_KEY = 'MIFARE_KEY';
   const RIDERCLASS_KEY = 'RIDERCLASS_KEY';
+  const WALLET_ID = 'WALLET_ID';
 
     useEffect(() => {
       getLogin();
@@ -28,11 +29,25 @@ const HomeScreen = ( {navigation} ) => {
       let user = firebase.auth().currentUser;
       const loginUser = await EncryptedStorage.getItem(USER_KEY);
 
+
       if (user && !(loginUser == null)) {
         console.log(user);
 
         let userEmail = firebase.auth().currentUser.email ;
-        setuserLogin(userEmail);
+
+        let returnCustomer = await getCustomer(loginUser);
+        console.log(returnCustomer);
+        const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
+
+        if (returnCustomer.found && loginWalletId == returnCustomer.walletId)
+        {
+          setuserLogin(userEmail);
+        }
+        else
+        {
+          setuserLogin(null);
+        }
+
 
       } else {
         setuserLogin(null);
@@ -59,9 +74,8 @@ const HomeScreen = ( {navigation} ) => {
       setPassword(null);
     }
 
+
     loginAction= async () => {  
-
-
 
       if (!email || email.length <= 0) 
       {
@@ -83,10 +97,14 @@ const HomeScreen = ( {navigation} ) => {
           console.log(response.user);
 
           let uniqueId = (await getUniqueId()).toString();
+          let deviceName = (await getDeviceName()).toString().replaceAll(' ', '');
+
+          loginWalletId = deviceName +":"+ uniqueId;
+
           var requestCustomer = JSON.stringify({
             "userId": response.user.uid,
             "userName": response.user.email,
-            "walletId"  : uniqueId
+            "walletId"  : loginWalletId
           });
 
           let returnCustomer = await postCustomer(requestCustomer);
@@ -95,6 +113,7 @@ const HomeScreen = ( {navigation} ) => {
           if (returnCustomer.found)
           {
             await EncryptedStorage.setItem(USER_KEY, returnCustomer.id);
+            await EncryptedStorage.setItem(WALLET_ID, loginWalletId);
             setuserLogin(email);
           }
         }
