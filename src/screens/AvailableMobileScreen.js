@@ -119,12 +119,12 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
       {
         const json = await response.json();
         console.log(json);
-        Alert.alert("Ticket was not activated");  
+        Alert.alert("Unable to active ticket.");  
       }
 
     } catch (error) {
       console.log(error);
-      Alert.alert("Ticket was not activated");  
+      Alert.alert("Unable to active ticket.");  
     }
 
     
