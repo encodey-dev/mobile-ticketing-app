@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  View, Text, StyleSheet, FlatList, SafeAreaView ,TouchableOpacity,ImageBackground, Image} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { getUniqueId } from 'react-native-device-info';
 
 import {getToken} from '../core/getToken';
 import styles from '../core/ticketsStyle';
@@ -22,6 +23,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
   const getTickets = async () => {
 
     const loginUser = await EncryptedStorage.getItem(USER_KEY);
+    let uniqueId = (await getUniqueId()).toString();
 
     let token = await getToken();
 
@@ -31,7 +33,8 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-          "CustomerID": loginUser
+          "CustomerID": loginUser,
+          "WalletId" : uniqueId
         });
 
 
