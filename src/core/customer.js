@@ -91,7 +91,7 @@ export const getCustomer = async (customerId) => {
 
          returnCustomer.id = json.id;
          returnCustomer.walletId = json.walletId;
-         returnCustomer.found = true;
+         returnCustomer.found = "true";
 
          return returnCustomer;
        }
@@ -103,6 +103,7 @@ export const getCustomer = async (customerId) => {
        }
      } catch (error) {
        console.log(error);
+       returnCustomer.found = "error";
        return returnCustomer;
      }
 }

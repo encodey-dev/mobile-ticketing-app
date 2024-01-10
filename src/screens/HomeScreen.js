@@ -38,8 +38,16 @@ const HomeScreen = ( {navigation} ) => {
         let returnCustomer = await getCustomer(loginUser);
         console.log(returnCustomer);
         const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
+       
+        // If customer is offline or API fails, app will continue login anyway.
+        if (returnCustomer.found == "error" )
+        {
+          setuserLogin(userEmail);
+          return;
+        }
 
-        if (returnCustomer.found && loginWalletId == returnCustomer.walletId)
+        // Validate customer if customer is found.
+        if (returnCustomer.found == "true" && loginWalletId == returnCustomer.walletId)
         {
           setuserLogin(userEmail);
         }
@@ -47,6 +55,7 @@ const HomeScreen = ( {navigation} ) => {
         {
           setuserLogin(null);
         }
+        
 
 
       } else {
