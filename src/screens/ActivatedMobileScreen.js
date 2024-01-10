@@ -12,6 +12,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
     
     const USER_KEY = 'USER_KEY';
     const WALLET_ID = 'WALLET_ID';
+    const TICKETS_LIST = 'TICKETS_LIST';
     const staticImage = require("../assets/Ticket.png");
     const staticImageLogo = require("../assets/logo.png");
     
@@ -50,11 +51,32 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
         );
         const json = await response.json();
 
+        // Store tickets on storage in case user is offline
+        await EncryptedStorage.setItem(TICKETS_LIST, JSON.stringify(json));
 
         setTickets(json.tickets);
+
+        // Finish the routine
+        return ;
       } catch (error) {
         console.log(error);
+        
       }
+      
+      // Get tickets from Store in case user is offline.
+      try {
+        const ticketList = await EncryptedStorage.getItem(TICKETS_LIST);
+
+        if (!(ticketList == null)) {
+          const t = JSON.parse(ticketList);
+          setTickets(t.tickets);
+        }
+      
+      } catch (error) {
+        console.log(error);
+              
+      }
+
 
   };
 
