@@ -70,6 +70,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
         if (!(ticketList == null)) {
           const t = JSON.parse(ticketList);
           setTickets(t.tickets);
+          console.log(t);
         }
       
       } catch (error) {
@@ -99,7 +100,8 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
       navigation.navigate("ShowBarcodeScreen", {ticket: {
         url:          item.url,
         productDescription:         item.productDescription,
-        endDate:         item.endDate
+        endDate:         item.endDate,
+        ticketData : item.ticketData
       }});
     
     } catch (error) {

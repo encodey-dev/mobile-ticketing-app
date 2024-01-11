@@ -1,11 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, View, Text, StyleSheet , SafeAreaView,Image} from 'react-native';
 import { WebView } from 'react-native-webview';
+import QRCode from 'react-native-qrcode-svg';
 
 const ShowBarcodeScreen = ( {navigation, route} ) => {
 
   const staticImage = require("../assets/logo.png");
   const ticket = route.params.ticket;
+
+  const [timeCode, setTimeCode] = useState("");
+
+  
+  const startTimer = () => {
+
+       timer = setTimeout(() => {
+          const d =  new Date();
+          const localTime = new Date(d.getTime() - 18000000);
+          const obj = {d: ticket.ticketData, t: localTime.toISOString()};
+
+          console.log(localTime.getUTCHours());
+          const myJSON = JSON.stringify(obj);
+        setTimeCode(myJSON);
+        }, 1000)
+    }
+
+    useEffect(() => {
+        startTimer();
+       
+    });    
+
 
     return (
 
@@ -17,8 +40,16 @@ const ShowBarcodeScreen = ( {navigation, route} ) => {
             <Text style={styles.touchableText}>{ticket.productDescription}</Text>
             <Text style={styles.touchableText}>{ticket.endDate}</Text>
         </View>
-        <View style={{ flex: 4, backgroundColor: "white" }} >
-        <WebView source={{ uri: ticket.url }} />
+        <View style={{ flex: 4, backgroundColor: "white" ,  alignItems: "center" }} >
+
+        { timeCode && (
+          <QRCode 
+            value= {timeCode}
+            size={150}
+          />
+        )}
+
+
         
         </View>
        
