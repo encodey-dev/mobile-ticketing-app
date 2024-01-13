@@ -76,5 +76,11 @@ export default StyleSheet.create({
   mainViewWhole: {
     flex: 1,
     justifyContent: "center",
-  } 
+  } ,
+  showText: {
+    marginBottom: 30,
+    padding: 5,  
+    alignItems: 'center',
+    color: 'black',
+  },
   });

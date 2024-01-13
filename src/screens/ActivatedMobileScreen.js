@@ -171,7 +171,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
       <View style={{ flex: 5 }}>
 
              
-      { tickets && (
+      { tickets ? (
          <View style={styles.mainView}>
           <FlatList  
                       data={tickets}  
@@ -198,7 +198,11 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
                     
                   />  
            </View>                
-        )}
+        ): 
+        ( 
+          <Text style={styles.showText}>If you dont see your tickets, Please call customer services</Text>
+        )
+        }
 
 
 
