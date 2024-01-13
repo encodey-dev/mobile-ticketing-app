@@ -13,6 +13,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
     const USER_KEY = 'USER_KEY';
     const WALLET_ID = 'WALLET_ID';
     const TICKETS_LIST = 'TICKETS_LIST';
+    const LAST_REFRESH = 'LAST_REFRESH';
     const staticImage = require("../assets/Ticket.png");
     const staticImageLogo = require("../assets/logo.png");
     
@@ -26,6 +27,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
 
     const loginUser = await EncryptedStorage.getItem(USER_KEY);
     const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
+    
 
     let token = await getToken();
 
@@ -53,6 +55,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
 
         // Store tickets on storage in case user is offline
         await EncryptedStorage.setItem(TICKETS_LIST, JSON.stringify(json));
+        await EncryptedStorage.setItem(LAST_REFRESH, Date.now().toString());
 
         setTickets(json.tickets);
 
@@ -63,9 +66,22 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
         
       }
       
-      // Get tickets from Store in case user is offline.
+      // Get tickets from storage in case user is offline.
       try {
         const ticketList = await EncryptedStorage.getItem(TICKETS_LIST);
+        const lastRefresh = await EncryptedStorage.getItem(LAST_REFRESH);
+
+        if (!(lastRefresh == null)) {
+            const isNow = Date.now();
+            const refreshHours = 3*60*60*1000;
+            const lastRefreshNumber = Number(lastRefresh) + refreshHours;
+    
+            // Allow 3 hours of offline data
+            if (lastRefreshNumber < isNow)
+            {
+              return;
+            }
+        }
 
         if (!(ticketList == null)) {
           const t = JSON.parse(ticketList);
