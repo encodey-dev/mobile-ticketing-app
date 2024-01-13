@@ -1,27 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import { Button, View, Text, StyleSheet , SafeAreaView,Image} from 'react-native';
-import { WebView } from 'react-native-webview';
 import QRCode from 'react-native-qrcode-svg';
+
+import {generateTime} from '../core/generateTime';
 
 const ShowBarcodeScreen = ( {navigation, route} ) => {
 
   const staticImage = require("../assets/logo.png");
   const ticket = route.params.ticket;
 
-  const [timeCode, setTimeCode] = useState("");
+  // Set the barcode for the first time.
+  let gTime = generateTime(18000000);
+  const objCode = {d: ticket.ticketData, t: gTime};
+  const jsonCode = JSON.stringify(objCode);
 
-  
+  const [timeCode, setTimeCode] = useState(jsonCode);
+
+
   const startTimer = () => {
-
+   
+       // Change the barcode every 3 seconds.
        timer = setTimeout(() => {
-          const d =  new Date();
-          const localTime = new Date(d.getTime() - 18000000);
-          const obj = {d: ticket.ticketData, t: localTime.toISOString()};
-
-          console.log(localTime.getUTCHours());
+          let g = generateTime(18000000);
+          const obj = {d: ticket.ticketData, t: g};
           const myJSON = JSON.stringify(obj);
         setTimeCode(myJSON);
-        }, 1000)
+        }, 3000)
     }
 
     useEffect(() => {
