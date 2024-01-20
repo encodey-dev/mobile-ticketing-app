@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text,  FlatList, Alert, SafeAreaView , TouchableOpacity,ImageBackground, Image} from 'react-native';
+import { View, Text,  FlatList,  SafeAreaView , TouchableOpacity,ImageBackground, Image} from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-import {getToken} from '../core/getToken';
-import {config} from '../core/config';
+import {getProducts} from '../core/products';
 import styles from '../core/ticketsStyle';
+import {config} from '../core/config';
 
 
 const PurchaseMobileScreen = ( {navigation, route} ) => {
@@ -16,41 +16,25 @@ const PurchaseMobileScreen = ( {navigation, route} ) => {
     const staticImageLogo = require("../assets/logo.png");
 
     useEffect(() => {
-      getProducts();
+      bringProducts();
 
     }, []);
 
 
 
 
-  const getProducts = async () => {
+  const bringProducts = async () => {
 
     const loginUser = await EncryptedStorage.getItem(USER_KEY);
     setuserLogin(loginUser);
 
-    let token = await getToken();
 
-    try {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer "+ token);
-
-
-        var requestOptions = {
-          method: 'GET',
-          headers: myHeaders
-        };
-
-
-        const response = await fetch(
-          config.apiUrl+'/products?Ismobile=true&RiderClassID='+ config.fullFareRiderClass ,  requestOptions
-        );
-        const json = await response.json();
-
-
-        setProducts(json.products);
-      } catch (error) {
-        console.log(error);
-      }
+    const returnBody = await getProducts(config.fullFareRiderClass)
+    if (returnBody.result)
+    {
+        console.log(returnBody.json);
+        setProducts(returnBody.json.products);
+    }
 
   };
 

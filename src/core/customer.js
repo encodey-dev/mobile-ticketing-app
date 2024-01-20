@@ -1,6 +1,6 @@
 import {getToken} from './getToken';
 import {config} from './config';
-import {Alert} from 'react-native';
+
 
 
 export const postCustomer = async (requestBody) => {

@@ -3,9 +3,9 @@ import { View, Text,  FlatList, Alert, SafeAreaView , TouchableOpacity,ImageBack
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 import {getToken} from '../core/getToken';
-import {config} from '../core/config';
-import {setPurchase} from '../core/setPurchase';
 import styles from '../core/ticketsStyle';
+import {getProducts} from '../core/products';
+import {getMifareData} from '../core/mifare';
 
 
 const MifareCardScreen = ( {navigation, route} ) => {
@@ -47,90 +47,18 @@ const MifareCardScreen = ( {navigation, route} ) => {
            
             requestOptions = await getMifareData(cardID);
             setMifareCard(requestOptions);
-            getProducts(riderClassID);
+
+            const returnBody = await getProducts(riderClassID)
+
+            if (returnBody.result)
+            {
+              console.log(returnBody.json);
+              setProducts(returnBody.json.products);
+            }
         }
    }
 
-   const getMifareData = async (cardID) => {
-
-
-    try {
-      let token = await getToken();
-
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer "+ token);
-
-
-      var requestOptions = {
-        method: 'GET',
-        headers: myHeaders
-      };
-
-
-      const response = await fetch(
-        config.apiUrl+'/mifarecards/'+cardID,  requestOptions
-      );
-
-      if (response.status == 200)
-      {
-        const json = await response.json();
-        console.log(json);
-        var requestOptions = {
-          cardID: cardID,
-          riderClassID: json.riderClassUniqueID, 
-          balance : json.balance,
-          status : 200
-          };
-
-        return requestOptions;
-      }
-      else
-      {
-        var requestOptions = { cardID: cardID, status : 400 };
-        const json = await response.json();
-        console.log(json);
-        return requestOptions;
-      }
-      
-
-
-    } catch (error) {
-      console.log(error);
-    }
-
-
-   }
-
-  const getProducts = async (riderClassID) => {
-
-    console.log(riderClassID);
-
-    try {
-        let token = await getToken();
-
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer "+ token);
-
-
-        var requestOptions = {
-          method: 'GET',
-          headers: myHeaders
-        };
-
-
-        const response = await fetch(
-          config.apiUrl+'/products?RiderClassID='+riderClassID,  requestOptions
-        );
-        const json = await response.json();
-
-
-        setProducts(json.products);
-      } catch (error) {
-        console.log(error);
-      }
-
-  };
-
+ 
   renderSeparator =  () => {  
     return (  
         <View  
@@ -197,14 +125,20 @@ const MifareCardScreen = ( {navigation, route} ) => {
           {
    
             setMifareCard(requestOptions);
-            getProducts(requestOptions.riderClassID);
+            const returnBody = await getProducts(requestOptions.riderClassID);
+
+            if (returnBody.result)
+            {
+              console.log(returnBody.json);
+              setProducts(returnBody.json.products);
+            }
     
             await EncryptedStorage.setItem(MIFARE_KEY, inputCard);
             await EncryptedStorage.setItem(RIDERCLASS_KEY, requestOptions.riderClassID);
           }
           else
           {
-            Alert.alert("Ticket was not activated");  
+            Alert.alert("Unable to get card information");  
           }
 
   
@@ -214,10 +148,9 @@ const MifareCardScreen = ( {navigation, route} ) => {
         }
 
 
-      
+ 
   
-    
-      }
+    }
     
     
     return (
