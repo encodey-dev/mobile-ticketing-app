@@ -48,7 +48,7 @@ const MifareCardScreen = ( {navigation, route} ) => {
             requestOptions = await getMifareData(cardID);
             setMifareCard(requestOptions);
 
-            const returnBody = await getProducts(riderClassID)
+            const returnBody = await getProducts(riderClassID, false);
 
             if (returnBody.result)
             {
@@ -125,7 +125,7 @@ const MifareCardScreen = ( {navigation, route} ) => {
           {
    
             setMifareCard(requestOptions);
-            const returnBody = await getProducts(requestOptions.riderClassID);
+            const returnBody = await getProducts(requestOptions.riderClassID, false);
 
             if (returnBody.result)
             {

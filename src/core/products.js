@@ -2,7 +2,7 @@
 import {setHeader} from './getToken';
 import {config} from './config';
 
-export const getProducts = async (riderClassID) => {
+export const getProducts = async (riderClassID, ismobile) => {
 
     console.log(riderClassID);
 
@@ -23,7 +23,7 @@ export const getProducts = async (riderClassID) => {
 
 
         const response = await fetch(
-          config.apiUrl+'/products?RiderClassID='+riderClassID,  requestOptions
+          config.apiUrl+'/products?RiderClassID='+riderClassID + "&ismobile="+ismobile,  requestOptions
         );
         const json = await response.json();
 

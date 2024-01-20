@@ -41,7 +41,7 @@ const AvailableMobileScreen = ( {navigation, route} ) => {
 
     try {
          
-      var bodyRequest = JSON.stringify({ "CustomerID": loginUser,"WalletId" : loginWalletId});
+      var bodyRequest = JSON.stringify({ "CustomerID": loginUser,"WalletId" : loginWalletId, "MobileOnly" : true});
 
       const returnBody = await getAvailableTickets(bodyRequest)
 

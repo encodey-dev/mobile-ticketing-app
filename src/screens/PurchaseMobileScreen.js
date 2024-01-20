@@ -29,7 +29,7 @@ const PurchaseMobileScreen = ( {navigation, route} ) => {
     setuserLogin(loginUser);
 
 
-    const returnBody = await getProducts(config.fullFareRiderClass)
+    const returnBody = await getProducts(config.fullFareRiderClass, true)
     if (returnBody.result)
     {
         console.log(returnBody.json);
