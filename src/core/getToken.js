@@ -55,3 +55,14 @@ export const getToken = async () => {
     console.log(error);
   }
 };
+
+export const setHeader = async () => {
+    let token = await getToken();
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer "+ token);
+    myHeaders.append("Content-Type", "application/json");
+
+    return myHeaders;
+
+}

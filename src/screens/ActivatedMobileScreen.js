@@ -3,9 +3,9 @@ import {  View, Text, StyleSheet, FlatList, SafeAreaView ,TouchableOpacity,Image
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 
-import {getToken} from '../core/getToken';
+import {getActivedTickets} from '../core/tickets';
 import styles from '../core/ticketsStyle';
-import {config} from '../core/config';
+
 
 const ActivatedMobileScreen = ( {navigation, route} ) => {
     const [tickets, setTickets] = useState(null);
@@ -29,38 +29,24 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
     const loginWalletId = await EncryptedStorage.getItem(WALLET_ID);
     
 
-    let token = await getToken();
-
     try {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer "+ token);
-        myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-          "CustomerID": loginUser,
-          "WalletId" : loginWalletId
-        });
+        var bodyRequest = JSON.stringify({"CustomerID": loginUser, "WalletId" : loginWalletId});
 
+        const returnBody = await getActivedTickets(bodyRequest)
 
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-        };
+        if (returnBody.result )
+        {
 
-        const response = await fetch(
-          config.apiUrl+'/tickets/activated',  requestOptions
-        );
-        const json = await response.json();
+          // Store tickets on storage in case user is offline
+          await EncryptedStorage.setItem(TICKETS_LIST, JSON.stringify(returnBody.json));
+          await EncryptedStorage.setItem(LAST_REFRESH, Date.now().toString());
 
-        // Store tickets on storage in case user is offline
-        await EncryptedStorage.setItem(TICKETS_LIST, JSON.stringify(json));
-        await EncryptedStorage.setItem(LAST_REFRESH, Date.now().toString());
+          setTickets(returnBody.json.tickets);
 
-        setTickets(json.tickets);
-
-        // Finish the routine
-        return ;
+          // Finish the routine
+          return ;
+        }
       } catch (error) {
         console.log(error);
         
