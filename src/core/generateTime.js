@@ -21,15 +21,13 @@ function randomString(len, charSet) {
 }
 
 
-export function generateTime (timeOffset) {
+export function generateTime () {
 
     const d =  new Date();
-    const localTime = new Date(d.getTime() - timeOffset);
-
-
-
+    const localTime = new Date(d.getTime() );
 
     const g = localTime.toUTCString();
+
 
      return g;
 

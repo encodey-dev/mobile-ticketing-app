@@ -10,7 +10,7 @@ const ShowBarcodeScreen = ( {navigation, route} ) => {
   const ticket = route.params.ticket;
 
   // Set the barcode for the first time.
-  let gTime = generateTime(18000000);
+  let gTime = generateTime();
   const objCode = {d: ticket.ticketData, t: gTime};
   const jsonCode = JSON.stringify(objCode);
 
@@ -21,7 +21,7 @@ const ShowBarcodeScreen = ( {navigation, route} ) => {
    
        // Change the barcode every 3 seconds.
        timer = setTimeout(() => {
-          let g = generateTime(18000000);
+          let g = generateTime();
           const obj = {d: ticket.ticketData, t: g};
           const myJSON = JSON.stringify(obj);
         setTimeCode(myJSON);

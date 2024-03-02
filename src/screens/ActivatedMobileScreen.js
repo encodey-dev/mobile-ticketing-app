@@ -42,6 +42,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
           await EncryptedStorage.setItem(TICKETS_LIST, JSON.stringify(returnBody.json));
           await EncryptedStorage.setItem(LAST_REFRESH, Date.now().toString());
 
+
           setTickets(returnBody.json.tickets);
 
           // Finish the routine
@@ -99,10 +100,13 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
   clickAction= async (item) => {  
     try {
 
+      const unixTime = Date.parse(item.endDate );
+      const stringDate = new Date(  unixTime ).toString()
+
       navigation.navigate("ShowBarcodeScreen", {ticket: {
         url:          item.url,
         productDescription:         item.productDescription,
-        endDate:         item.endDate,
+        endDate:         stringDate,
         ticketData : item.ticketData
       }});
     
@@ -167,7 +171,6 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
                       <View style={styles.mainView}>
                         <ImageBackground source={staticImage} resizeMode="cover" style={styles.image}>
                           <Text style={styles.item}>{item.productDescription}</Text>
-                          <Text style={styles.item}>{item.endDate}</Text>
 
                           <TouchableOpacity
                                   style={styles.touchableView}
