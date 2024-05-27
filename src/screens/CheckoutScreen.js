@@ -40,7 +40,7 @@ const CheckoutScreen = ( {navigation, route} ) => {
            return ;
         }
 
-        let response =await setPurchase(requestSent.bodyPurchaseApi);
+        let response =await setPurchase(requestSent.bodyPurchaseApi, requestSent.purchaseType);
 
       
    

@@ -6,11 +6,11 @@ export const config = {
 
 
     // Production
-    apiUrl: 'https://api-qa.encodey.com/v1',
+    apiUrl: 'https://api-qa.encodey.com',
     tokenUrl : 'https://api-qa.encodey.com/account/Token',
     clientId : REACT_APP_CLIENTID,
     clientKey : REACT_APP_CLIENTKEY,
-    fullFareRiderClass : 'ric_2b27321106e04a06bf5c1ff829c558c7',
+    fullFareRiderClass : 'ric_969a2a6cc430495da165f52f0c18ebcb',
     paymentGatewayname : REACT_APP_PAYMENT_NAME,
     paymentGatewayKey : REACT_APP_PAYMENT_KEY,
      

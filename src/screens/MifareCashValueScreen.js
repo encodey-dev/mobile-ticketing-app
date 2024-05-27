@@ -31,8 +31,9 @@ const MifareCashValueScreen = ( {navigation, route} ) => {
         var requestBody = JSON.stringify({
             "ProductId": purchaseDetails.ProductId,
             "CustomerID": purchaseDetails.CustomerID,
-            "NfcCardID" : purchaseDetails.NfcCardID,
+            "mifareCardID" : purchaseDetails.mifareCardID,
             "StoreValue" : value
+            
         });
 
       
@@ -40,7 +41,7 @@ const MifareCashValueScreen = ( {navigation, route} ) => {
           bodyPurchaseApi: requestBody,
           shortDescription: purchaseDetails.shortDescription, 
           unitPrice: value.toString() , 
-          purchaseType : "Card " + purchaseDetails.NfcCardID
+          purchaseType : "Card " + purchaseDetails.mifareCardID
         }});
   
      }
@@ -50,7 +51,7 @@ const MifareCashValueScreen = ( {navigation, route} ) => {
 
         <Image source={staticImageLogo}   style={styles.logo}/>
         { purchaseDetails && (
-           <Text style={localstyles.cardText}>Load {purchaseDetails.NfcCardID}</Text>
+           <Text style={localstyles.cardText}>Load {purchaseDetails.mifareCardID}</Text>
         )}
 
         <View style={styles.mainView}>

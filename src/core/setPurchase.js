@@ -2,7 +2,7 @@ import {getToken} from './getToken';
 import {config} from './config';
 import {Alert} from 'react-native';
 
-export const setPurchase = async (requestBody) => {
+export const setPurchase = async (requestBody, purchaseType) => {
     try {
 
         let token = await getToken();
@@ -16,9 +16,19 @@ export const setPurchase = async (requestBody) => {
           headers: myHeaders,
           body: requestBody,
         };
+
+        let url = config.apiUrl+'/i/v1/tickets/issue';
+
+
+        if (purchaseType == "Mobile")
+        { 
+           url = config.apiUrl+'/m/v1/tickets/issue';
+        }
+        
+        
   
         const response = await fetch(
-          config.apiUrl+'/tickets/issue',  requestOptions
+          url,  requestOptions
         );
   
         

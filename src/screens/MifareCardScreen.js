@@ -82,7 +82,7 @@ const MifareCardScreen = ( {navigation, route} ) => {
           navigation.navigate("MifareCashValueScreen", {purchaseDetails: {
             ProductId:          item.uniqueId,
             CustomerID:         userLogin,
-            NfcCardID:         mifareCard.cardID,
+            mifareCardID:         mifareCard.cardID,
             shortDescription: item.shortDescription
           }});
         
@@ -96,7 +96,7 @@ const MifareCardScreen = ( {navigation, route} ) => {
         var requestBody = JSON.stringify({
             "ProductId": item.uniqueId,
             "CustomerID": userLogin,
-            "NfcCardID" : mifareCard.cardID
+            "mifareCardID" : mifareCard.cardID
         });
 
 

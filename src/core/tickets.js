@@ -21,7 +21,7 @@ export const getActivedTickets= async (bodyRequest ) => {
       };
 
       const response = await fetch(
-        config.apiUrl+'/tickets/activated',  requestOptions
+        config.apiUrl+'/m/v1/tickets/activated',  requestOptions
       );
 
       const json = await response.json();
@@ -58,7 +58,7 @@ export const getAvailableTickets= async (bodyRequest ) => {
      
 
       const response = await fetch(
-        config.apiUrl+'/tickets/available',  requestOptions
+        config.apiUrl+'/m/v1/tickets/available',  requestOptions
       );
 
       const json = await response.json();
@@ -90,9 +90,10 @@ export const activeTicket= async (bodyRequest ) => {
         };
   
         const response = await fetch(
-          config.apiUrl+'/tickets/activate',  requestOptions
+          config.apiUrl+'/m/v1/tickets/activate',  requestOptions
         );
         
+        console.log(response);
         if (response.status == 200)
         {
           const json = await response.json();

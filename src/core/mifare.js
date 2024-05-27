@@ -18,7 +18,7 @@ export  const getMifareData = async (cardID) => {
 
 
       const response = await fetch(
-        config.apiUrl+'/mifarecards/'+cardID,  requestOptions
+        config.apiUrl+'/i/v1/mifarecards/'+cardID,  requestOptions
       );
 
       if (response.status == 200)

@@ -27,7 +27,7 @@ export const postCustomer = async (requestBody) => {
       };
 
       const response = await fetch(
-        config.apiUrl+'/customer',  requestOptions
+        config.apiUrl+'/m/v1/customer',  requestOptions
       );
 
       
@@ -80,7 +80,7 @@ export const getCustomer = async (customerId) => {
        };
  
        const response = await fetch(
-         config.apiUrl+'/customer?id='+customerId ,  requestOptions
+         config.apiUrl+'/m/v1/customer?id='+customerId ,  requestOptions
        );
  
        console.log(response);

@@ -23,7 +23,7 @@ export const getProducts = async (riderClassID, ismobile) => {
 
 
         const response = await fetch(
-          config.apiUrl+'/products?RiderClassID='+riderClassID + "&ismobile="+ismobile,  requestOptions
+          config.apiUrl+'/s/v1/products?RiderClassID='+riderClassID + "&ismobile="+ismobile,  requestOptions
         );
         const json = await response.json();
 
