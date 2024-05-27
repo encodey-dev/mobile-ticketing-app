@@ -1,18 +1,27 @@
 
-Mobile app source code
+## Get Your Own Mobile Ticketing App (Free!)
 
-We will provide a free mobile application with the source code ready to customizer with your logo and method of payment, so customer can buy the tickets using the application.
+This offer provides a free mobile application that lets you easily customize it for your business. Here's what you get:
 
-The application is ready to buy mobile passes and recharge mifare cards.
+* Full Control:**  The app's source code is included, allowing you to personalize it with your logo and preferred payment method.
+* Ticketing Made Easy:** Sell mobile passes and recharge existing Mifare cards directly through the app. 
+* Seamless Payments:** The system is pre-configured to accept payments via Authorized.net, a trusted payment gateway.
 
-System is ready to accept Authorized.net as a payment gateway.  
+**Getting Started:**
 
-INSTRUCTIONS
-Copy env file to .env and change variables with your values.
+1. Download the App:** We'll provide the mobile app source code.
+2. Set Up Your Account:** Copy the provided `.env` file and update it with your specific details.
+3. Authentication Options:**
+    * **Basic Authentication (Current Setup):** The app currently uses basic authentication with Firebase. However, please note that the source code won't include the necessary Firebase configuration files (GoogleService-info.plist and google-services.json).
+    * **Alternative Authentication:**  If you prefer a different authentication method, you can follow the provided link for instructions on continuing with Firebase.
 
-AUTHENTICATION.
-System is already setup to use basic authentication using FIREBASE. 
-Source code will not have GoogleService-info.plist neither google-services.json. 
+**Benefits:**
+
+* Cost-Effective:** Get a mobile ticketing app without upfront development fees.
+* Customization:** Tailor the app to your brand and payment preferences.
+* Convenience:** Offer mobile ticketing and Mifare card recharging for your customers.
+
+**Ready to take your ticketing system mobile? Download the source and get started today!**
 
 Follow this link if you want to continue using firebase as a authentication.
 
