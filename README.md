@@ -1,19 +1,16 @@
 
 Mobile app source code
 
-We will provide a free mobile application with the source code ready to customizer with your logo and method of payment, so customer can buy the tickets using the application.
+We offer a complimentary mobile application along with its source code, fully customizable with your logo and preferred payment method. This allows customers to purchase tickets directly through the app.
 
-The application is ready to buy mobile passes and recharge mifare cards.
+The application supports buying mobile passes and recharging MIFARE cards.
 
-System is ready to accept Authorized.net as a payment gateway.  
+The system is configured to accept Authorized.net as a payment gateway.
 
-INSTRUCTIONS
-Copy env file to .env and change variables with your values.
+INSTRUCTIONS: Copy the env file to .env and update the variables with your specific values.
 
-AUTHENTICATION.
-System is already setup to use basic authentication using FIREBASE. 
-Source code will not have GoogleService-info.plist neither google-services.json. 
+AUTHENTICATION: The system is pre-configured for basic authentication using Firebase. Please note, the source code will not include GoogleService-info.plist or google-services.json files.
 
-Follow this link if you want to continue using firebase as a authentication.
+If you wish to continue using Firebase for authentication, please follow this link
 
 https://www.freecodecamp.org/news/how-to-add-authentication-to-react-native-in-three-steps-using-firebase/
