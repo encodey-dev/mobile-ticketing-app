@@ -1,5 +1,7 @@
 
-Mobile app source code
+Mobile app source code 
+
+The intention of the source code is to generate QR codes for public transportation.
 
 We offer a complimentary mobile application along with its source code, fully customizable with your logo and preferred payment method. This allows customers to purchase tickets directly through the app.
 
@@ -14,3 +16,4 @@ AUTHENTICATION: The system is pre-configured for basic authentication using Fire
 If you wish to continue using Firebase for authentication, please follow this link
 
 https://www.freecodecamp.org/news/how-to-add-authentication-to-react-native-in-three-steps-using-firebase/
+
