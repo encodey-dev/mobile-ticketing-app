@@ -242,9 +242,10 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   logo: {
-    width: 350,
-    height: 58,
+    width: 230,
+    height: 30,
     marginBottom: 30,
+    marginTop: 30,
   },
   textInput: {
     marginBottom: 30,

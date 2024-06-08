@@ -39,23 +39,28 @@ const ShowBarcodeScreen = ( {navigation, route} ) => {
       <SafeAreaView style={{ flex: 1 }}>
        <View style={styles.mainView}>
          
-        <View style={{ flex: 2, backgroundColor: "white" }} />
+        <View style={{ flex: 1, backgroundColor: "white" }} />
             <Image source={staticImage}   style={styles.logo}/>
             <Text style={styles.touchableText}>{ticket.productDescription}</Text>
-            <Text style={styles.touchableText}>{ticket.endDate}</Text>
+
         </View>
-        <View style={{ flex: 4, backgroundColor: "white" ,  alignItems: "center" }} >
-
-        { timeCode && (
-          <QRCode 
-            value= {timeCode}
-            size={150}
-          />
-        )}
-
-
         
+        <View style={{ flex: 5, backgroundColor: "white" ,  alignItems: "center" }} >
+        <Text style={styles.touchableText}>Scan this code to ride</Text> 
+          { timeCode && (
+            <QRCode 
+              value= {timeCode}
+              size={150}
+            />
+          )}
+
+          <Text style={styles.touchableText}>Expires</Text> 
+          <Text style={styles.touchableText}>{ticket.endDate.substring(0,24)}</Text> 
+
+
         </View>
+        
+        
        
       </SafeAreaView>
     )
@@ -76,8 +81,8 @@ const styles = StyleSheet.create({
     color: '#065b9b'
   },
   logo: {
-    width: 350,
-    height: 45,
+    width: 150,
+    height: 25,
     marginBottom: 10,
     marginTop: 10,
   },

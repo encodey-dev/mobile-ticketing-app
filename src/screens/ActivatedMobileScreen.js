@@ -176,7 +176,7 @@ const ActivatedMobileScreen = ( {navigation, route} ) => {
                                   style={styles.touchableView}
                                   onPress={this.clickAction.bind(this, item)}
                                     >
-                            <Text style={styles.touchableText}>Tap for Barcode</Text>
+                            <Text style={styles.touchableText}>Tap to Ride</Text>
                           </TouchableOpacity>
 
                           </ImageBackground>
